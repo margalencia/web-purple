@@ -9,13 +9,15 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunkMiddleware from 'redux-thunk';
 
-import * as reducers from './reducers/app.reducer';
+import { reducer as formReducer } from 'redux-form';
+
+import * as reducers from './reducers';
 import { fetchUser } from './actions/user.actions';
 
 import App from './containers/app';
 import FeedPage from './containers/feed.page';
-import UsersPage from './containers/users.page';
 import SettingsPage from './containers/settings.page';
+import AboutPage from './components/about-page';
 
 injectTapEventPlugin();
 
@@ -26,6 +28,7 @@ const store = createStore(
     combineReducers({
         ...reducers,
         routing: routerReducer,
+        form: formReducer,
     }),
     applyMiddleware(thunkMiddleware, middleware)
 );
@@ -42,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => render(
             <Route path="/" component={App}>
                 <IndexRoute component={FeedPage} />
                 <Route path="feed" component={FeedPage} />
-                <Route path="users" component={UsersPage} />
+                <Route path="about" component={AboutPage} />
                 <Route path="settings" component={SettingsPage} />
             </Route>
         </Router>
